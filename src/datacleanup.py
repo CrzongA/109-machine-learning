@@ -2,7 +2,7 @@ from numpy import NaN
 import pandas as pd
 import csv
 
-dataPath = "./data"
+dataPath = "../data"
 trainPath = dataPath+"train.csv"
 sortedPath = dataPath+"newtrain.csv"
 remainPath = dataPath+"remainEmployees.csv"
