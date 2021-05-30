@@ -3,12 +3,15 @@ import pandas as pd
 import csv
 
 dataPath = "../data/"
-trainPath = dataPath+"train.csv"
-sortedPath = dataPath+"newtrain.csv"
-remainPath = dataPath+"remainEmployees.csv"
-leftPath = dataPath+"leftEmployees.csv"
-year_2014_2016_path = dataPath+"data_2014-2016.csv"
-year_2015_2017_path = dataPath+"data_2015-2017.csv"
+outputPath = "out/"
+trainPath = dataPath + "train.csv"
+sortedPath = dataPath + outputPath + "newtrain.csv"
+remainPath = dataPath + outputPath + "remainEmployees.csv"
+leftPath = dataPath + outputPath + "leftEmployees.csv"
+year_2014_2016_path = dataPath + outputPath + "data_2014-2016.csv"
+year_2015_2017_path = dataPath + outputPath + "data_2015-2017.csv"
+
+print("Running...")
 
 # testdata = pd.read_csv(testpath)
 traindata = pd.read_csv(trainPath)
@@ -37,8 +40,8 @@ data_2014 = byPerNoData[byPerNoData["yyyy"]==2014.0]
 data_2015 = byPerNoData[byPerNoData["yyyy"]==2015.0]
 data_2016 = byPerNoData[byPerNoData["yyyy"]==2016.0]
 data_2017 = byPerNoData[byPerNoData["yyyy"]==2017.0]
-data_2014_2016 = data_2014.copy(deep=True).merge(data_2015, how='inner', on='PerNo').merge(data_2016, how='inner', on='PerNo')
-data_2015_2017 = data_2015.copy(deep=True).merge(data_2016, how='inner', on='PerNo').merge(data_2017, how='inner', on='PerNo')
+data_2014_2016 = data_2014.copy(deep=True).merge(data_2015, how='inner', on='PerNo', suffixes=["_1", "_2"]).merge(data_2016, how='inner', on='PerNo', suffixes=["", "_3"])
+data_2015_2017 = data_2015.copy(deep=True).merge(data_2016, how='inner', on='PerNo', suffixes=["_1", "_2"]).merge(data_2017, how='inner', on='PerNo', suffixes=["", "_3"])
 # for i in range (0, data.shape[0]):
 #     if 
 # byPerNoHeaders = 
@@ -52,4 +55,8 @@ data_2015_2017.to_csv(year_2015_2017_path, index=False, header=data_2015_2017.co
 remainData.to_csv(remainPath, index=False, header=remainData.columns)
 leftData.to_csv(leftPath, index=False, header=leftData.columns)
 
-print("Data cleanup done! Output files in " + remainPath + " and " + leftPath)
+print("Data cleanup done!\n" +  "Output files: "
+ + remainPath + ", " 
+ + leftPath + ", " 
+ + year_2014_2016_path + ", " 
+ + year_2015_2017_path)
